@@ -44,6 +44,8 @@ class JobSurvey {
     private int jobCount;
     private String highestPaidJobEuroZone;
     private String lowestPaidJobEuroZone;
+    private double highestSalaryEuroZone;
+    private double lowestSalaryEuroZone;
 
     public void enterJobInformation(Scanner scanner) {
         System.out.print("Enter job title: ");
@@ -57,19 +59,25 @@ class JobSurvey {
 
         // Required metrics calculations to be diplayed
         if (jobCount == 0 || salary > highestSalary) {
-          highestSalary = salary;
-            highestPaidJob = jobTitle;
-            if (inEuroZone) {
-               highestPaidJobEuroZone = jobTitle;
-            }
+    highestSalary = salary;
+    highestPaidJob = jobTitle;
+}
+    if (jobCount == 0 || salary < lowestSalary) {
+    lowestSalary = salary;
+    lowestPaidJob = jobTitle;
+}
+ // Calculate Eurozone salary metrics separately
+    if (inEuroZone) {
+        if (highestPaidJobEuroZone == null || salary > highestSalaryEuroZone) {
+            highestSalaryEuroZone = salary;
+            highestPaidJobEuroZone = jobTitle;
         }
-        if (jobCount == 0 || salary < lowestSalary) {
-           lowestSalary = salary;
-          lowestPaidJob = jobTitle;
-            if (inEuroZone) {
-               lowestPaidJobEuroZone = jobTitle;
-            }
+
+        if (lowestPaidJobEuroZone == null || salary < lowestSalaryEuroZone) {
+            lowestSalaryEuroZone = salary;
+            lowestPaidJobEuroZone = jobTitle;
         }
+    }
         totalSalary += salary;
         jobCount++;
     }
@@ -84,10 +92,23 @@ class JobSurvey {
         System.out.println("Job with the lowest salary: " + lowestPaidJob + " (EUR" + lowestSalary + ")");
         System.out.println("Average salary: EUR" + averageSalary);
         if (highestPaidJobEuroZone != null) {
-          System.out.println("Job with highest salary in Euro Zone: " + highestPaidJobEuroZone);
-        }
-        if (lowestPaidJobEuroZone != null) {
-          System.out.println("Job with lowest salary in Euro Zone: " + lowestPaidJobEuroZone);
-        }
+    System.out.println(
+        "Job with highest salary in Euro Zone: "
+            + highestPaidJobEuroZone
+            + " (EUR"
+            + highestSalaryEuroZone
+            + ")"
+    );
+
+    System.out.println(
+        "Job with lowest salary in Euro Zone: "
+            + lowestPaidJobEuroZone
+            + " (EUR"
+            + lowestSalaryEuroZone
+            + ")"
+    );
+} else {
+    System.out.println("No Euro Zone jobs entered.");
+}
     }
 }
