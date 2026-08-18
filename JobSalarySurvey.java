@@ -54,8 +54,18 @@ class JobSurvey {
     private double lowestSalaryEuroZone;
 
     public void enterJobInformation(Scanner scanner) {
-        System.out.print("Enter job title: ");
-        String jobTitle = scanner.nextLine();
+        String jobTitle;
+
+while (true) {
+    System.out.print("Enter job title: ");
+    jobTitle = scanner.nextLine().trim();
+
+    if (!jobTitle.isEmpty()) {
+        break;
+    }
+
+    System.out.println("Job title cannot be blank.");
+}
         double salary;
 
 while (true) {
@@ -77,9 +87,24 @@ while (true) {
         );
     }
 }
-        System.out.print("Is this job in a Euro Zone country? (yes/no): ");
-        String euroZoneResponse = scanner.nextLine().trim().toLowerCase();
-        boolean inEuroZone = euroZoneResponse.equals("yes");
+        boolean inEuroZone;
+
+while (true) {
+    System.out.print("Is this job in a Euro Zone country? (yes/no): ");
+    String euroZoneResponse = scanner.nextLine().trim();
+
+    if (euroZoneResponse.equalsIgnoreCase("yes")) {
+        inEuroZone = true;
+        break;
+    }
+
+    if (euroZoneResponse.equalsIgnoreCase("no")) {
+        inEuroZone = false;
+        break;
+    }
+
+    System.out.println("Invalid response. Please enter yes or no.");
+}
 
         // Required metrics calculations to be diplayed
         if (jobCount == 0 || salary > highestSalary) {
