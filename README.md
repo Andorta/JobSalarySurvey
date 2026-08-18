@@ -116,6 +116,10 @@ Planned improvements include the following:
 - Browser-based dashboard and salary charts
 - Support for additional currencies
 
+## License
+
+This project is licensed under the MIT License. See [LICENSE](LICENSE) for details.
+
 ## Author
 
 Created by [Andorta](https://github.com/Andorta).
