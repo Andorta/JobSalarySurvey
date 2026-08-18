@@ -1,0 +1,187 @@
+import java.text.NumberFormat;
+import java.util.Locale;
+import java.util.Scanner;
+
+public class JobSalarySurvey {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        boolean exit = false;
+        JobSurvey survey = new JobSurvey();
+
+        while (!exit) {
+         System.out.println("1. Enter job data for survey");
+         System.out.println("2. Calculate metrics");
+         System.out.println("3. Exit");
+         System.out.print("Enter your choice: ");
+         String choiceInput = scanner.nextLine().trim();
+         int choice;
+         try {
+            choice = Integer.parseInt(choiceInput);
+        } catch (NumberFormatException exception) {
+            System.out.println("Invalid choice. Please enter 1, 2, or 3.");
+            continue;
+}
+
+          switch (choice) {
+              case 1:
+                 // User enters job information on this option
+                   survey.enterJobInformation(scanner);
+                   break;
+                 case 2:
+                    // Application calculates required metrics on this option
+                    survey.calculateMetrics();
+                    break;
+                case 3:
+               // User exits the application on this option
+                   exit = true;
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+        }
+        scanner.close();
+    }
+}
+
+class JobSurvey {
+    private String highestPaidJob;
+    private String lowestPaidJob;
+    private double highestSalary;
+    private double lowestSalary;
+    private double totalSalary;
+    private int jobCount;
+    private String highestPaidJobEuroZone;
+    private String lowestPaidJobEuroZone;
+    private double highestSalaryEuroZone;
+    private double lowestSalaryEuroZone;
+
+    public void enterJobInformation(Scanner scanner) {
+        String jobTitle;
+
+while (true) {
+    System.out.print("Enter job title: ");
+    jobTitle = scanner.nextLine().trim();
+
+    if (!jobTitle.isEmpty()) {
+        break;
+    }
+
+    System.out.println("Job title cannot be blank.");
+}
+        double salary;
+
+while (true) {
+    System.out.print("Enter yearly salary for " + jobTitle + " in EUR: ");
+    String salaryInput = scanner.nextLine().trim();
+
+    try {
+        salary = Double.parseDouble(salaryInput);
+
+        if (!Double.isFinite(salary) || salary <= 0) {
+            System.out.println("Salary must be a positive, finite number.");
+            continue;
+        }
+
+        break;
+    } catch (NumberFormatException exception) {
+        System.out.println(
+            "Invalid salary. Enter a number without currency symbols or commas."
+        );
+    }
+}
+        boolean inEuroZone;
+
+while (true) {
+    System.out.print("Is this job in a Euro Zone country? (yes/no): ");
+    String euroZoneResponse = scanner.nextLine().trim();
+
+    if (euroZoneResponse.equalsIgnoreCase("yes")) {
+        inEuroZone = true;
+        break;
+    }
+
+    if (euroZoneResponse.equalsIgnoreCase("no")) {
+        inEuroZone = false;
+        break;
+    }
+
+    System.out.println("Invalid response. Please enter yes or no.");
+}
+
+        // Required metrics calculations to be diplayed
+        if (jobCount == 0 || salary > highestSalary) {
+    highestSalary = salary;
+    highestPaidJob = jobTitle;
+}
+    if (jobCount == 0 || salary < lowestSalary) {
+    lowestSalary = salary;
+    lowestPaidJob = jobTitle;
+}
+ // Calculate Eurozone salary metrics separately
+    if (inEuroZone) {
+        if (highestPaidJobEuroZone == null || salary > highestSalaryEuroZone) {
+            highestSalaryEuroZone = salary;
+            highestPaidJobEuroZone = jobTitle;
+        }
+
+        if (lowestPaidJobEuroZone == null || salary < lowestSalaryEuroZone) {
+            lowestSalaryEuroZone = salary;
+            lowestPaidJobEuroZone = jobTitle;
+        }
+    }
+        totalSalary += salary;
+        jobCount++;
+    }
+
+    public void calculateMetrics() {
+    if (jobCount == 0) {
+        System.out.println("No jobs entered yet.");
+        return;
+    }
+
+    NumberFormat euroFormatter =
+        NumberFormat.getCurrencyInstance(Locale.forLanguageTag("en-IE"));
+
+    double averageSalary = totalSalary / jobCount;
+
+    System.out.println(
+        "Job with the highest salary: "
+            + highestPaidJob
+            + " ("
+            + euroFormatter.format(highestSalary)
+            + ")"
+    );
+
+    System.out.println(
+        "Job with the lowest salary: "
+            + lowestPaidJob
+            + " ("
+            + euroFormatter.format(lowestSalary)
+            + ")"
+    );
+
+    System.out.println(
+        "Average salary: " + euroFormatter.format(averageSalary)
+    );
+
+    if (highestPaidJobEuroZone != null) {
+        System.out.println(
+            "Job with highest salary in Euro Zone: "
+                + highestPaidJobEuroZone
+                + " ("
+                + euroFormatter.format(highestSalaryEuroZone)
+                + ")"
+        );
+
+        System.out.println(
+            "Job with lowest salary in Euro Zone: "
+                + lowestPaidJobEuroZone
+                + " ("
+                + euroFormatter.format(lowestSalaryEuroZone)
+                + ")"
+        );
+    } else {
+        System.out.println("No Euro Zone jobs entered.");
+    }
+}
+}

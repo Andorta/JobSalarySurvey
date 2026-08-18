@@ -1,73 +1,125 @@
-Job Salary Survey
+# Job Salary Survey
 
-**Description**
+A command-line Java application for entering job salary data and calculating salary statistics.
 
-Job Salary Survey is a simple Java program that allows users to input job salary data and calculates key metrics such as:
+This project began as an introductory Java exercise and is being improved with input validation, clearer program structure, testing, and additional salary-analysis features.
 
-The highest and lowest paid jobs
+## Features
 
-The highest and lowest paid jobs within the Euro Zone
+- Enter job titles and annual salaries
+- Classify jobs as inside or outside the Eurozone
+- Calculate the highest and lowest salaries
+- Calculate the average salary
+- Calculate separate Eurozone minimum and maximum salaries
+- Validate menu choices, job titles, salaries, and yes/no responses
+- Display salaries using Euro currency formatting
 
-The average salary across all entered jobs
+## Requirements
 
-This tool helps users analyze salary distributions efficiently.
+- Java Development Kit (JDK) 11 or newer
+- Git
 
-**Features**
+Check your Java installation with:
 
-Allows users to enter job titles and salaries
+```bash
+java -version
+javac -version
+```
 
-Identifies the highest and lowest paying jobs
-
-Supports classification of jobs within and outside the Euro Zone
-
-Calculates the average salary
-
-**Technologies Used**
-
-Java
-
-Scanner class for user input
-
-How to Run the Program
+## Installation
 
 Clone the repository:
 
-git clone https://github.com/yourusername/JobSalarySurvey.git
+```bash
+git clone https://github.com/Andorta/JobSalarySurvey.git
+```
 
-Navigate to the project directory:
+Enter the project directory:
 
+```bash
 cd JobSalarySurvey
+```
 
-Compile the Java file:
+## Compile and Run
 
-javac JobSalarySurvey.java
+Compile the application:
 
-Run the program:
+```bash
+javac -d . JobSalarySurvey.java
+```
 
-java JobSalarySurvey
+Run it:
 
-**Example Usage**
+```bash
+java -cp . JobSalarySurvey
+```
 
+## Example
+
+```text
 1. Enter job data for survey
 2. Calculate metrics
 3. Exit
 Enter your choice: 1
-Enter job title: Software Engineer
-Enter yearly salary for Software Engineer: EUR60000
+
+Enter job title: Software Developer
+Enter yearly salary for Software Developer in EUR: 50000
 Is this job in a Euro Zone country? (yes/no): yes
+```
 
-**Future Enhancements**
+After selecting the metrics option:
 
-Implement data persistence to store job data across sessions
+```text
+Job with the highest salary: Software Developer (€50,000.00)
+Job with the lowest salary: Software Developer (€50,000.00)
+Average salary: €50,000.00
+Job with highest salary in Euro Zone: Software Developer (€50,000.00)
+Job with lowest salary in Euro Zone: Software Developer (€50,000.00)
+```
 
-Add graphical user interface (GUI)
+## Input Validation
 
-Support for multiple currencies and conversions
+The application rejects:
 
-**Contributions**
+- Invalid menu choices
+- Blank job titles
+- Non-numeric salaries
+- Zero and negative salaries
+- Non-finite values such as `NaN` and `Infinity`
+- Responses other than `yes` or `no` for the Eurozone question
 
-Contributions are welcome! please feel free to fork the repository and submit pull requests.
+## Project Structure
 
-**License**
+```text
+JobSalarySurvey/
+├── .gitignore
+├── JobSalarySurvey.java
+└── README.md
+```
 
-This project is open-source and available under the MIT License.
+## Current Limitations
+
+- Survey data exists only while the application is running
+- Salaries are currently entered only in Euros
+- The application uses a command-line interface
+- Automated tests have not been added at the moment
+
+## Roadmap
+
+Planned improvements include the following:
+
+- Maven project structure
+- Automated tests with JUnit
+- Separate model and service classes
+- Persistent database storage
+- REST API built with Spring Boot
+- Browser-based dashboard and salary charts
+- Support for additional currencies
+
+## License
+
+This project is licensed under the MIT License. See [LICENSE](LICENSE) for details.
+
+## Author
+
+Created by [Andorta](https://github.com/Andorta).
