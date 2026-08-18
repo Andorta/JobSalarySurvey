@@ -11,8 +11,14 @@ public class JobSalarySurvey {
          System.out.println("2. Calculate metrics");
          System.out.println("3. Exit");
          System.out.print("Enter your choice: ");
-          int choice = scanner.nextInt();
-           scanner.nextLine();
+         String choiceInput = scanner.nextLine().trim();
+         int choice;
+         try {
+            choice = Integer.parseInt(choiceInput);
+        } catch (NumberFormatException exception) {
+            System.out.println("Invalid choice. Please enter 1, 2, or 3.");
+            continue;
+}
 
           switch (choice) {
               case 1:
