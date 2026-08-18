@@ -56,9 +56,27 @@ class JobSurvey {
     public void enterJobInformation(Scanner scanner) {
         System.out.print("Enter job title: ");
         String jobTitle = scanner.nextLine();
-        System.out.print("Enter yearly salary for " + jobTitle + ": EUR");
-        double salary = scanner.nextDouble();
-        scanner.nextLine();
+        double salary;
+
+while (true) {
+    System.out.print("Enter yearly salary for " + jobTitle + ": EUR");
+    String salaryInput = scanner.nextLine().trim();
+
+    try {
+        salary = Double.parseDouble(salaryInput);
+
+        if (!Double.isFinite(salary) || salary <= 0) {
+            System.out.println("Salary must be a positive, finite number.");
+            continue;
+        }
+
+        break;
+    } catch (NumberFormatException exception) {
+        System.out.println(
+            "Invalid salary. Enter a number without currency symbols or commas."
+        );
+    }
+}
         System.out.print("Is this job in a Euro Zone country? (yes/no): ");
         String euroZoneResponse = scanner.nextLine().trim().toLowerCase();
         boolean inEuroZone = euroZoneResponse.equals("yes");
