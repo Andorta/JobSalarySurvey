@@ -1,3 +1,5 @@
+import java.text.NumberFormat;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class JobSalarySurvey {
@@ -69,7 +71,7 @@ while (true) {
         double salary;
 
 while (true) {
-    System.out.print("Enter yearly salary for " + jobTitle + ": EUR");
+    System.out.print("Enter yearly salary for " + jobTitle + " in EUR: ");
     String salaryInput = scanner.nextLine().trim();
 
     try {
@@ -132,32 +134,54 @@ while (true) {
     }
 
     public void calculateMetrics() {
-        if (jobCount == 0) {
-            System.out.println("No jobs entered yet.");
-            return;
-        }
-        double averageSalary = totalSalary / jobCount;
-        System.out.println("Job with the highest salary: " + highestPaidJob + " (EUR" + highestSalary + ")");
-        System.out.println("Job with the lowest salary: " + lowestPaidJob + " (EUR" + lowestSalary + ")");
-        System.out.println("Average salary: EUR" + averageSalary);
-        if (highestPaidJobEuroZone != null) {
+    if (jobCount == 0) {
+        System.out.println("No jobs entered yet.");
+        return;
+    }
+
+    NumberFormat euroFormatter =
+        NumberFormat.getCurrencyInstance(Locale.forLanguageTag("en-IE"));
+
+    double averageSalary = totalSalary / jobCount;
+
     System.out.println(
-        "Job with highest salary in Euro Zone: "
-            + highestPaidJobEuroZone
-            + " (EUR"
-            + highestSalaryEuroZone
+        "Job with the highest salary: "
+            + highestPaidJob
+            + " ("
+            + euroFormatter.format(highestSalary)
             + ")"
     );
 
     System.out.println(
-        "Job with lowest salary in Euro Zone: "
-            + lowestPaidJobEuroZone
-            + " (EUR"
-            + lowestSalaryEuroZone
+        "Job with the lowest salary: "
+            + lowestPaidJob
+            + " ("
+            + euroFormatter.format(lowestSalary)
             + ")"
     );
-} else {
-    System.out.println("No Euro Zone jobs entered.");
-}
+
+    System.out.println(
+        "Average salary: " + euroFormatter.format(averageSalary)
+    );
+
+    if (highestPaidJobEuroZone != null) {
+        System.out.println(
+            "Job with highest salary in Euro Zone: "
+                + highestPaidJobEuroZone
+                + " ("
+                + euroFormatter.format(highestSalaryEuroZone)
+                + ")"
+        );
+
+        System.out.println(
+            "Job with lowest salary in Euro Zone: "
+                + lowestPaidJobEuroZone
+                + " ("
+                + euroFormatter.format(lowestSalaryEuroZone)
+                + ")"
+        );
+    } else {
+        System.out.println("No Euro Zone jobs entered.");
     }
+}
 }
